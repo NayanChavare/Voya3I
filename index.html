@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDG-INSIGHT | Digital Assessment Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Load Pyodide for Python Backend in Browser -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <style>
+      body { 
+        font-family: 'Inter', sans-serif; 
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+      @keyframes slide-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      
+      .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      
+      .dark .glass {
+        background: rgba(15, 23, 42, 0.8);
+        border-color: rgba(51, 65, 85, 0.5);
+      }
+      
+      .sdg-gradient {
+        background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      }
+
+      @media print {
+        nav, footer, .no-print, button {
+          display: none !important;
+        }
+        body {
+          background-color: white !important;
+          padding: 20px !important;
+          color: black !important;
+        }
+        main {
+          margin: 0 !important;
+          width: 100% !important;
+        }
+        .max-w-7xl {
+          max-width: 100% !important;
+        }
+        .rounded-\[3rem\], .rounded-\[3\.5rem\], .rounded-\[2\.5rem\], .rounded-\[4rem\] {
+          border-radius: 8px !important;
+          border: 1px solid #e2e8f0 !important;
+          box-shadow: none !important;
+          background: white !important;
+          color: black !important;
+        }
+        .bg-slate-900 {
+          background-color: #0f172a !important;
+          color: white !important;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        .text-white {
+          color: white !important;
+        }
+        .sdg-gradient {
+          background: #10b981 !important;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        .dark\:bg-slate-900\/50, .dark\:bg-slate-900 {
+          background-color: white !important;
+          color: black !important;
+        }
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/Voya3I/assets/index-LkU8UKf3.js"></script>
+</head>
+  <body class="bg-[#F8FAFC] dark:bg-[#020617] text-slate-900 dark:text-slate-100 custom-scrollbar transition-colors duration-300">
+    <div id="root"></div>
+</body>
+</html>
