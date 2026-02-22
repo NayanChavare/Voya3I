@@ -683,7 +683,11 @@ const Assessment = ({ user, onComplete }: { user: User | null, onComplete: (q: Q
       <div className="flex justify-between items-end mb-12">
         <div>
           <Badge variant="info">{q.type}</Badge>
+<<<<<<< HEAD
           <h2 className="text-4xl font-black tracking-tight mt-4 text-slate-900 dark:text-white">Question {currentIdx + 1}/{questions.length}</h2>
+=======
+          <h2 className="text-4xl font-black tracking-tight mt-4 text-slate-900 dark:text-white">Directive {currentIdx + 1}/{questions.length}</h2>
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
         </div>
         <div className="text-right">
           <span className="text-lg font-black text-emerald-500 tracking-widest">{Math.round(progress)}%</span>
@@ -1049,7 +1053,11 @@ const Navigation = ({ view, setView, user, logout, isDark, toggleTheme }: { view
           </div>
         ) : (
           <button onClick={() => setView('role-select')} className="px-8 py-3 bg-slate-900 dark:bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl active:scale-95">
+<<<<<<< HEAD
             Get Started
+=======
+            Deploy Node
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
           </button>
         )}
       </div>

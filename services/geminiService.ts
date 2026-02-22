@@ -9,8 +9,13 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || process.env.A
  */
 async function makeApiCallWithRetry(
   apiCall: () => Promise<GenerateContentResponse>, 
+<<<<<<< HEAD
   maxRetries = 8, 
   initialDelay = 5000
+=======
+  maxRetries = 3, 
+  initialDelay = 1000
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
 ): Promise<GenerateContentResponse> {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
@@ -57,8 +62,13 @@ export async function generateSDGQuestions(dept: string, role: string, difficult
   const entropySeed = Math.random().toString(36).substring(2) + Date.now().toString(36);
   
   const response = await makeApiCallWithRetry(() => ai.models.generateContent({
+<<<<<<< HEAD
     model: 'gemini-flash-lite-latest',
     contents: `Act as a world-class Higher Education sustainability consultant. Generate a set of 15 rigorous and HIGHLY UNIQUE assessment questions about the UN Sustainable Development Goals (SDGs) specifically tailored for a ${role} in the ${dept} department.
+=======
+    model: 'gemini-3-flash-preview',
+    contents: `Act as a world-class Higher Education sustainability consultant. Generate a set of 25 rigorous and HIGHLY UNIQUE assessment questions about the UN Sustainable Development Goals (SDGs) specifically tailored for a ${role} in the ${dept} department.
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
 
     The difficulty level for the questions must be ${difficulty}. 
     
@@ -77,10 +87,17 @@ export async function generateSDGQuestions(dept: string, role: string, difficult
     For ATTITUDE, ENGAGEMENT, and EXPOSURE questions, provide 4 options ordered from MOST sustainable/positive (index 0) to LEAST sustainable/positive (index 3).
     
     Structure:
+<<<<<<< HEAD
     - 6 Knowledge questions (Multiple choice)
     - 3 Attitude questions (Disposition and values)
     - 3 Engagement questions (Behavioral actions)
     - 3 Exposure questions (Institutional interaction)
+=======
+    - 10 Knowledge questions (Multiple choice)
+    - 5 Attitude questions (Disposition and values)
+    - 5 Engagement questions (Behavioral actions)
+    - 5 Exposure questions (Institutional interaction)
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
     
     Format response as a valid JSON array.`,
     config: {
@@ -117,7 +134,11 @@ export async function generateSDGQuestions(dept: string, role: string, difficult
 
 export async function getSetupSuggestions(dept: string): Promise<string> {
   const response = await makeApiCallWithRetry(() => ai.models.generateContent({
+<<<<<<< HEAD
     model: 'gemini-flash-lite-latest',
+=======
+    model: 'gemini-3-flash-preview',
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
     contents: `Give a single, powerful 15-word strategic statement about how the ${dept} department can specifically drive the SDGs in a revolutionary way.`,
   }));
   return response.text?.trim() || "Empowering academic excellence through localized sustainability and institutional responsibility.";
@@ -192,7 +213,11 @@ export async function getAIImprovementPlan(scores: AssessmentScores, role: strin
   `;
 
   const response = await makeApiCallWithRetry(() => ai.models.generateContent({
+<<<<<<< HEAD
     model: 'gemini-flash-lite-latest',
+=======
+    model: 'gemini-3-flash-preview',
+>>>>>>> 2307c67b3b0dcc92e6b492346a34e2a3b641739d
     contents: prompt,
     config: {
       tools: [{ googleSearch: {} }],
