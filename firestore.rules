@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is an admin
+    function isAdmin() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin';
+    }
+
+    // Helper function to get user's institution
+    function getInstitution() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.institution;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || (isAdmin() && resource.data.institution == getInstitution()));
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (request.auth.uid == userId || (isAdmin() && resource.data.institution == getInstitution()));
+      allow delete: if request.auth != null && (isAdmin() && resource.data.institution == getInstitution());
+    }
+
+    // Assessments
+    match /assessments/{assessmentId} {
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || (isAdmin() && resource.data.institution == getInstitution()));
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow delete: if request.auth != null && (resource.data.userId == request.auth.uid || (isAdmin() && resource.data.institution == getInstitution()));
+    }
+
+    // AI Interactions
+    match /ai_interactions/{interactionId} {
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+  }
+}
