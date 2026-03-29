@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "fullName": { "type": "string" },
+        "role": { "type": "string", "enum": ["Student", "Faculty/Staff", "Admin", "Guest"] },
+        "institution": { "type": "string" },
+        "country": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "emailVerified": { "type": "boolean" }
+      },
+      "required": ["id", "email", "fullName", "role"]
+    },
+    "Assessment": {
+      "title": "Assessment",
+      "description": "An SDG assessment result.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "dept": { "type": "string" },
+        "scores": { "type": "object" },
+        "institution": { "type": "string" },
+        "aiInsights": { "type": "object" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dept", "scores", "timestamp"]
+    },
+    "AIInteraction": {
+      "title": "AIInteraction",
+      "description": "A log of an AI interaction.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "prompt": { "type": "string" },
+        "ai_response": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "prompt", "ai_response", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/assessments/{assessmentId}": {
+      "schema": "Assessment",
+      "description": "Assessment results."
+    },
+    "/ai_interactions/{interactionId}": {
+      "schema": "AIInteraction",
+      "description": "AI interaction logs."
+    }
+  }
+}

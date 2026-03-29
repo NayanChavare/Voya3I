@@ -1,0 +1,10 @@
+{
+  "projectId": "sdg-insight",
+  "appId": "1:1063117026868:web:629e65615d45d0cd2dbc61",
+  "apiKey": "AIzaSyCKm0pX1gmJyK1Iqq2so48nwIYmcED4h6c",
+  "authDomain": "sdg-insight.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "sdg-insight.firebasestorage.app",
+  "messagingSenderId": "1063117026868",
+  "measurementId": ""
+}

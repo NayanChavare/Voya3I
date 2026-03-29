@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDG-INSIGHT | Digital Assessment Framework</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Load Pyodide for Python Backend in Browser -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <style>
+      body { 
+        font-family: 'Inter', sans-serif; 
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+      @keyframes slide-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      .animate-shimmer { animation: shimmer 2s infinite linear; }
+      
+      .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      
+      .dark .glass {
+        background: rgba(15, 23, 42, 0.8);
+        border-color: rgba(51, 65, 85, 0.5);
+      }
+      
+      .sdg-gradient {
+        background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      }
+
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        nav, footer, .no-print, button, .custom-scrollbar::-webkit-scrollbar {
+          display: none !important;
+        }
+        body, html {
+          background-color: #020617 !important; /* slate-950 */
+          padding: 0 !important;
+          margin: 0 !important;
+          color: #f8fafc !important; /* slate-50 */
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+        main {
+          margin: 0 !important;
+          width: 100% !important;
+        }
+        .max-w-7xl, .max-w-6xl, .max-w-4xl {
+          max-width: 100% !important;
+          width: 100% !important;
+          padding: 0 !important;
+        }
+        .rounded-\[3rem\], .rounded-\[3\.5rem\], .rounded-\[2\.5rem\], .rounded-\[4rem\], .rounded-\[4\.5rem\], .rounded-\[5rem\] {
+          border-radius: 24px !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          box-shadow: none !important;
+          background: rgba(15, 23, 42, 0.8) !important;
+          color: #f8fafc !important;
+          page-break-inside: avoid;
+        }
+        .bg-slate-900 {
+          background-color: #0f172a !important;
+          color: white !important;
+        }
+        .text-white {
+          color: white !important;
+        }
+        .sdg-gradient {
+          background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%) !important;
+        }
+        .dark\:bg-slate-900\/50, .dark\:bg-slate-900 {
+          background-color: #0f172a !important;
+          color: #f8fafc !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        h1, h2, h3, h4 {
+          color: #ffffff !important;
+          page-break-after: avoid;
+        }
+        p, span, div {
+          color: #cbd5e1 !important; /* slate-300 */
+          orphans: 3;
+          widows: 3;
+        }
+        .bg-emerald-500, .bg-emerald-600 {
+          background-color: #10b981 !important;
+          color: white !important;
+        }
+        .text-emerald-500, .text-emerald-400 {
+          color: #34d399 !important; /* emerald-400 */
+        }
+        .recharts-responsive-container {
+          page-break-inside: avoid;
+        }
+        .pdf-page {
+          page-break-after: always;
+          width: 210mm;
+          min-height: 297mm;
+          padding: 20mm;
+          position: relative;
+          background-color: #020617 !important;
+          box-sizing: border-box;
+          overflow: visible !important;
+        }
+        .pdf-page * {
+          word-wrap: break-word !important;
+          overflow-wrap: break-word !important;
+        }
+        .pdf-page:last-child {
+          page-break-after: auto;
+        }
+        .abstract-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          opacity: 0.1;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-[#F8FAFC] dark:bg-[#020617] text-slate-900 dark:text-slate-100 custom-scrollbar transition-colors duration-300">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
